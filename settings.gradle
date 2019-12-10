@@ -1,0 +1,2 @@
+include ':app', ':coffeemaker_ft', ':core'
+rootProject.name='DemoArch'

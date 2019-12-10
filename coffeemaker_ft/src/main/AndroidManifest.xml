@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.eveexite.demoarch.coffeemaker_ft">
+
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/title_coffeemaker">
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+        <dist:fusing dist:include="true" />
+    </dist:module>
+
+    <application>
+        <activity android:name=".presentation.coffeemaker.view.CoffeeMakerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+    </application>
+</manifest>
+

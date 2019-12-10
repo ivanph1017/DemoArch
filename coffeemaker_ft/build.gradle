@@ -1,0 +1,71 @@
+apply plugin: 'com.android.dynamic-feature'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+
+    buildTypes.each {
+
+        //Coffee Maker
+        it.buildConfigField "String", 'COFFEE_MAKER', '"coffee-maker"'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // UI
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    implementation 'com.airbnb.android:lottie:3.2.2'
+
+    // Reactive
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    // implementation 'io.reactivex.rxjava2:rxjava:2.2.5'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    //Dagger 2
+    kapt 'com.google.dagger:dagger-compiler:2.25.2'
+    kapt 'com.google.dagger:dagger-android-processor:2.25.2'
+
+    // Testing
+    testImplementation 'junit:junit:4.12'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+
+    // Espresso dependencies
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+
+    // The following Espresso dependency can be either "implementation"
+    // or "androidTestImplementation", depending on whether a local unit test
+    //or a instrumented test
+
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
+
+    implementation project(':app')
+    implementation project(':core')
+}

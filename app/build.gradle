@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+
+    compileSdkVersion 29
+
+    defaultConfig {
+        applicationId "com.eveexite.demoarch"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildTypes.each {
+
+        //Coffee Maker
+        //it.buildConfigField "String", 'COFFEE_MAKER', '"coffee-maker"'
+    }
+
+    dynamicFeatures = [":coffeemaker_ft"]
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':core')
+
+    // Android X
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // Dagger 2
+    kapt 'com.google.dagger:dagger-compiler:2.25.2'
+    kapt 'com.google.dagger:dagger-android-processor:2.25.2'
+
+    // Testing
+    testImplementation 'junit:junit:4.12'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+
+    // Espresso dependencies
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+
+    // The following Espresso dependency can be either "compile"
+    // or "androidTestCompile", depending on your app's implementation
+
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
+}
+
+apply plugin: 'com.google.gms.google-services'
