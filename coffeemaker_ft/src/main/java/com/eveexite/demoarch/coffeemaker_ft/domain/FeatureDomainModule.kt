@@ -1,6 +1,5 @@
 package com.eveexite.demoarch.coffeemaker_ft.domain
 
-import com.eveexite.demoarch.coffeemaker_ft.FeatureScope
 import com.eveexite.demoarch.coffeemaker_ft.data.coffeemaker.CoffeeMakerRepositoryImpl
 import com.eveexite.demoarch.coffeemaker_ft.data.coffeemaker.datasource.CoffeeMakerDataSourceFactory
 import com.eveexite.demoarch.coffeemaker_ft.domain.mapper.MapToCoffeeMaker
@@ -8,6 +7,7 @@ import com.eveexite.demoarch.coffeemaker_ft.domain.mapper.MapToCoffeeMakerNetSta
 import com.eveexite.demoarch.coffeemaker_ft.domain.usecase.CheckCoffeeMakerSwitch
 import com.eveexite.demoarch.coffeemaker_ft.domain.usecase.GetCoffeeMaker
 import com.eveexite.demoarch.coffeemaker_ft.domain.usecase.TurnOnCoffeeMaker
+import com.eveexite.demoarch.core.FeatureScope
 import com.eveexite.demoarch.core.device.DeviceInfoUtil
 import dagger.Module
 import dagger.Provides

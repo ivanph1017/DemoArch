@@ -1,2 +1,2 @@
-include ':app', ':coffeemaker_ft', ':core'
+include ':app', ':coffeemaker_ft', ':core', ':calendar_qa_ft'
 rootProject.name='DemoArch'

@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Calendar_QA</string>
+
+    <!-- Configure my event screen-->
+    <string name="configure_my_event">Configure my Event</string>
+    <string name="calendar_permission">Reading permission on calendar is required to select a calendar and a writing permission for adding new events on it.</string>
+
+    <!-- Add to my calendar screen -->
+    <string name="add_to_my_calendar">Add to my Calendar</string>
+    <string name="title_hint">Title</string>
+    <string name="title_helper">Title of the event</string>
+    <string name="location_hint">Location</string>
+    <string name="location_helper">Place where the event will be held</string>
+    <string name="description_hint">Description</string>
+    <string name="description_helper">Some details about the event</string>
+    <string name="start_date_hint">Start date</string>
+    <string name="start_date_helper">Date on which the event begins</string>
+    <string name="start_time_hint">Start time</string>
+    <string name="start_time_helper">Time on which the event begins</string>
+    <string name="end_date_hint">End date</string>
+    <string name="end_date_helper">Date on which the event ends</string>
+    <string name="end_time_hint">End time</string>
+    <string name="end_time_helper">Time on which the event ends</string>
+    <string name="minutes_hint">Minutes</string>
+    <string name="minutes_helper">Minutes prior to the event that the reminder should fire</string>
+    <string name="field_empty_error_message">The field cannot be empty.</string>
+    <string name="field_max_characters_error_message">The field cannot exceed the max number of characters.</string>
+
+    <!-- Alert Dialog -->
+    <string name="error">Error</string>
+    <string name="invalid_dates_error_message">The start date and time should be before than the end date and time of the event.</string>
+    <string name="date_time_poorly_written">The dates and times of the event are poorly written.</string>
+    <string name="calendar_could_not_be_selected">The calendar couldn\'t be selected. Verify that the Google Calendar App exists and it has at least a calendar.</string>
+    <string name="event_id_could_not_be_parse">The event id couldn\'t be parsed.</string>
+    <string name="event_could_not_be_added">The event couldn\'t be added to the calendar.</string>
+    <string name="reminder_could_not_be_added">The reminder couldn\'t be added to the event.</string>
+    <string name="input_data_could_not_processed">The input data couldn\'t be processed.</string>
+    <string name="minutes_poorly_written">The minutes of the reminder are poorly written.</string>
+    <string name="ok">Ok</string>
+
+    <!-- Finished -->
+    <string name="successful_message">The event has been successfully added to your Google Calendar.</string>
+    <string name="back_to_home">Back to home</string>
+
+</resources>

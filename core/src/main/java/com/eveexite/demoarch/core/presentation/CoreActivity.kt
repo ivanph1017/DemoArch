@@ -14,24 +14,24 @@ class CoreActivity : AppCompatActivity() {
 
     private lateinit var appPackageName: String
     private lateinit var moduleCoffeeMakerFt: String
-    private lateinit var moduleCalendarFt: String
+    private lateinit var moduleCalendarQaFt: String
     private lateinit var coffeeMakerClassName: String
-    private lateinit var calendarClassName: String
+    private lateinit var calendarQaClassName: String
     private lateinit var manager: SplitInstallManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_core)
-        init()
+        initView()
         setupClickListeners()
     }
 
-    private fun init() {
+    private fun initView() {
         appPackageName = applicationContext.packageName
         moduleCoffeeMakerFt = getString(R.string.module_coffeemaker_ft)
-        moduleCalendarFt = getString(R.string.module_calendar_ft)
+        moduleCalendarQaFt = getString(R.string.module_calendar_qa_ft)
         coffeeMakerClassName = "${appPackageName}.${moduleCoffeeMakerFt}.presentation.coffeemaker.view.CoffeeMakerActivity"
-        calendarClassName = "${appPackageName}.${moduleCalendarFt}.CalendarActivity"
+        calendarQaClassName = "${appPackageName}.${moduleCalendarQaFt}.presentation.configure.ConfigureActivity"
         manager = SplitInstallManagerFactory.create(this)
     }
 
@@ -40,7 +40,7 @@ class CoreActivity : AppCompatActivity() {
             loadAndLaunchModule(moduleCoffeeMakerFt)
         }
         findViewById<Button>(R.id.btn_calendar).setOnClickListener {
-            loadAndLaunchModule(moduleCalendarFt)
+            launchActivity(calendarQaClassName)
         }
     }
 
@@ -73,7 +73,6 @@ class CoreActivity : AppCompatActivity() {
         if (launch) {
             when (moduleName) {
                 moduleCoffeeMakerFt -> launchActivity(coffeeMakerClassName)
-                moduleCalendarFt -> launchActivity(calendarClassName)
             }
         }
     }
@@ -81,7 +80,8 @@ class CoreActivity : AppCompatActivity() {
     /** Launch an activity by its class name. */
     private fun launchActivity(className: String) {
         val intent = Intent().setClassName(packageName, className)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
 }

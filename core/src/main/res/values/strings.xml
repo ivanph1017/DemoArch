@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">core</string>
     <string name="module_coffeemaker_ft">coffeemaker_ft</string>
-    <string name="module_calendar_ft">calendar_ft</string>
+    <string name="module_calendar_qa_ft">calendar_qa_ft</string>
     <string name="go_to_coffee_maker_feature">Go to coffee maker feature</string>
     <string name="go_to_calendar_feature">Go to calendar feature</string>
 </resources>

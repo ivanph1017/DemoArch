@@ -1,0 +1,17 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.eveexite.demoarch.calendar_qa_ft">
+
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
+    <application>
+        <activity android:name=".presentation.configure.ConfigureActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".presentation.add.view.AddActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".presentation.finished.FinishedActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".presentation.configure.ConfigureActivity"/>
+    </application>
+
+</manifest>

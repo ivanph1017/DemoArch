@@ -8,25 +8,27 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.eveexite.demoarch.App
 import com.eveexite.demoarch.coffeemaker_ft.DaggerFeatureComponent
 import com.eveexite.demoarch.coffeemaker_ft.R
+import com.eveexite.demoarch.coffeemaker_ft.databinding.ActivityCoffeeMakerBinding
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.model.AnimUi
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.model.InfoUi
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.viewmodel.CoffeeMakerViewModel
 import com.eveexite.demoarch.coffeemaker_ft.presentation.ViewModelFactory
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.viewmodel.ActionViewModel
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.viewmodel.StatusViewModel
-import com.eveexite.demoarch.core.presentation.base.CoreBaseActivity
+import com.eveexite.demoarch.core.CoreComponent
+import com.eveexite.demoarch.core.CoreComponentProvider
+import com.eveexite.demoarch.core.presentation.CoreBaseActivity
 import kotlinx.android.synthetic.main.activity_coffee_maker.vMain
 import kotlinx.android.synthetic.main.activity_coffee_maker.vTitle
 import kotlinx.android.synthetic.main.activity_coffee_maker.vWaterLevel
 import kotlinx.android.synthetic.main.activity_coffee_maker.tvTimer
 import kotlinx.android.synthetic.main.activity_coffee_maker.fabPower
 
-@LayoutRes private const val LAYOUT: Int = R.layout.activity_coffee_maker
+@LayoutRes private val LAYOUT: Int = R.layout.activity_coffee_maker
 
-class CoffeeMakerActivity : CoreBaseActivity<ViewModelFactory>() {
+class CoffeeMakerActivity : CoreBaseActivity<ViewModelFactory, ActivityCoffeeMakerBinding>() {
 
     private lateinit var coffeeMakerViewModel: CoffeeMakerViewModel
     private lateinit var actionViewModel: ActionViewModel
@@ -35,15 +37,16 @@ class CoffeeMakerActivity : CoreBaseActivity<ViewModelFactory>() {
 
     override fun getLayout(): Int = LAYOUT
 
-    override fun buildDaggerFeatureComponent() {
-        val app: App = application as App
+    override fun initDependencyInjection() {
+        val coreComponentProvider = application as CoreComponentProvider
+        val coreComponent: CoreComponent = coreComponentProvider.provideCoreComponent()
         DaggerFeatureComponent.factory()
-            .create(app.provideCoreComponent())
+            .create(coreComponent)
             .inject(this)
-        runOnUiThread { init() }
+        runOnUiThread { initView() }
     }
 
-    private fun init() {
+    override fun initView() {
         msgLive = MediatorLiveData()
         setupViewModels()
         coffeeMakerViewModel.loadCoffeeMaker()

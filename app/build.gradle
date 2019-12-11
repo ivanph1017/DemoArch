@@ -20,6 +20,7 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -33,17 +34,31 @@ android {
         //it.buildConfigField "String", 'COFFEE_MAKER', '"coffee-maker"'
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     dynamicFeatures = [":coffeemaker_ft"]
 
 }
 
 dependencies {
+    def lifecycle_version = "2.1.0"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':core')
+    implementation project(':calendar_qa_ft')
 
     // Android X
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    // Architecture Components
+    // ViewModel and LiveData
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    // Test helpers for LiveData
+    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
 
     // Dagger 2
     kapt 'com.google.dagger:dagger-compiler:2.25.2'
@@ -51,19 +66,30 @@ dependencies {
 
     // Testing
     testImplementation 'junit:junit:4.12'
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:2.28.2'
 
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
 
+    // Assertions
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
+    androidTestImplementation 'com.google.truth:truth:0.42'
+
     // Espresso dependencies
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.2.0'
+    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.2.0'
 
-    // The following Espresso dependency can be either "compile"
-    // or "androidTestCompile", depending on your app's implementation
-
+    // The following Espresso dependency can be either "implementation"
+    // or "androidTestImplementation", depending on whether you want the
+    // dependency to appear on your APK's compile classpath or the test APK
+    // classpath.
     androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
 }
 

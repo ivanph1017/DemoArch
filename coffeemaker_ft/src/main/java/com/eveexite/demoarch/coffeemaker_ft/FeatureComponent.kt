@@ -6,11 +6,8 @@ import com.eveexite.demoarch.coffeemaker_ft.domain.FeatureDomainModule
 import com.eveexite.demoarch.coffeemaker_ft.presentation.FeatureUiModule
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.view.CoffeeMakerActivity
 import com.eveexite.demoarch.core.CoreComponent
+import com.eveexite.demoarch.core.FeatureScope
 import dagger.Component
-import javax.inject.Scope
-
-@Scope
-annotation class FeatureScope
 
 @FeatureScope
 @Component(
