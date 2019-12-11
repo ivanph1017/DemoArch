@@ -13,8 +13,8 @@ data class AddModel(
     var startTime: String = EMPTY_STRING,
     var endDate: String = EMPTY_STRING,
     var endTime: String = EMPTY_STRING,
-    var startDateTime: Calendar = Calendar.getInstance(),
-    var endDateTime: Calendar = Calendar.getInstance(),
+    var startDateTime: Date = Date(),
+    var endDateTime: Date = Date(),
     var minutesReminderText: String = EMPTY_STRING
 ): Cloneable {
 
@@ -46,15 +46,14 @@ data class AddModel(
     fun hasValidDateTimes(): Boolean {
         startDateTime = DateUtil.parseDateTime(startDate, startTime)
         endDateTime = DateUtil.parseDateTime(endDate, endTime)
-        val myEndDateTime: Calendar = endDateTime
-        return myEndDateTime.after(startDateTime)
+        return endDateTime.after(startDateTime)
     }
 
     @Throws(CloneNotSupportedException::class)
     public override fun clone(): AddModel {
         val model = super.clone() as AddModel
-        model.startDateTime = startDateTime.clone() as Calendar
-        model.endDateTime = endDateTime.clone() as Calendar
+        model.startDateTime = startDateTime.clone() as Date
+        model.endDateTime = endDateTime.clone() as Date
         return model
     }
 

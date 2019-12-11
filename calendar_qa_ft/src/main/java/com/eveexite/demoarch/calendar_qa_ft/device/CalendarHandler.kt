@@ -8,7 +8,9 @@ import android.net.Uri
 import android.provider.CalendarContract
 import com.eveexite.demoarch.calendar_qa_ft.R
 import com.eveexite.demoarch.calendar_qa_ft.presentation.add.model.AddModel
+import com.eveexite.demoarch.calendar_qa_ft.presentation.util.DateUtil
 import java.lang.ref.WeakReference
+import java.util.*
 
 private const val SELECT_CALENDAR_TOKEN: Int = 10
 private const val ADD_EVENT_TOKEN: Int = 20
@@ -34,14 +36,15 @@ class CalendarHandler(
     }
 
     fun addEventToCalendar(model: AddModel, calendarId: Long) {
+        val calendar: Calendar = DateUtil.mapDateToCalendar(model.startDateTime)
         val values = ContentValues()
         values.put(CalendarContract.Events.CALENDAR_ID, calendarId)
         values.put(CalendarContract.Events.TITLE, model.title)
         values.put(CalendarContract.Events.EVENT_LOCATION, model.location)
         values.put(CalendarContract.Events.DESCRIPTION, model.description)
-        values.put(CalendarContract.Events.DTSTART, model.startDateTime.timeInMillis)
-        values.put(CalendarContract.Events.DTEND, model.endDateTime.timeInMillis)
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, model.startDateTime.timeZone.id)
+        values.put(CalendarContract.Events.DTSTART, model.startDateTime.time)
+        values.put(CalendarContract.Events.DTEND, model.endDateTime.time)
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, calendar.timeZone.id)
         startInsert(ADD_EVENT_TOKEN, Any(), CalendarContract.Events.CONTENT_URI, values)
     }
 
