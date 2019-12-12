@@ -6,12 +6,15 @@
 
     <application>
         <activity android:name=".presentation.configure.ConfigureActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/CalendarTheme"/>
         <activity android:name=".presentation.add.view.AddActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/CalendarTheme" />
         <activity android:name=".presentation.finished.FinishedActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".presentation.configure.ConfigureActivity"/>
+            android:parentActivityName=".presentation.configure.ConfigureActivity"
+            android:theme="@style/CalendarTheme" />
     </application>
 
 </manifest>

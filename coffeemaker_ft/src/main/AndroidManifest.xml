@@ -14,7 +14,8 @@
     <application>
         <activity android:name=".presentation.coffeemaker.view.CoffeeMakerActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/CoffeeMakerTheme" />
     </application>
 </manifest>
 

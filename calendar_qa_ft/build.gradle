@@ -16,7 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.eveexite.demoarch.calendar_qa_ft.CalendarRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -71,6 +71,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.ext:truth:1.2.0'
     androidTestImplementation 'com.google.truth:truth:0.42'
+
+    // Databinding compiler for test
+    kaptAndroidTest 'androidx.databinding:databinding-compiler:3.5.3'
 
     // Espresso dependencies
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Core theme. -->
+    <style name="CoreTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="CoreTheme.SplashScreen" parent="CoreTheme">
+        <item name="android:windowBackground">@drawable/splashscreen</item>
+    </style>
+
+</resources>
