@@ -63,6 +63,8 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.28.2'
     testImplementation 'org.mockito:mockito-inline:2.28.2'
 
+    androidTestImplementation 'org.mockito:mockito-android:2.28.2'
+
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'

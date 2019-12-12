@@ -86,7 +86,7 @@ class AddActivity: CoreBaseActivity<ViewModelFactory, ActivityAddBinding>(), OnC
     }
 
     private fun createTextListener(textInputLayout: TextInputLayout)
-            = TextListener(textInputLayout, WeakReference(this))
+            = TextListener(applicationContext, textInputLayout, WeakReference(this))
 
     private fun setUpOnFocusListeners() {
         binding.etStartDate.onFocusChangeListener = createOnFocusChangeListener(START_DATE_EVENT)
@@ -113,12 +113,6 @@ class AddActivity: CoreBaseActivity<ViewModelFactory, ActivityAddBinding>(), OnC
 
     override fun validateEnablingButton() {
         binding.btnAdd.isEnabled = areFilledFields() && areValidFieldLengths()
-    }
-
-    override fun onTextInputLayoutError(textInputLayout: TextInputLayout, errorMessageRes: Int) {
-        textInputLayout.isErrorEnabled = true
-        textInputLayout.error = getString(errorMessageRes)
-        textInputLayout.setEndIconDrawable(R.drawable.ic_exclamation)
     }
 
     override fun hideKeyword() {

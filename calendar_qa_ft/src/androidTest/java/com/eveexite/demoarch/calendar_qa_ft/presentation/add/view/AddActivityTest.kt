@@ -1,11 +1,12 @@
 package com.eveexite.demoarch.calendar_qa_ft.presentation.add.view
 
 import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.Espresso.*
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.*
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.eveexite.demoarch.calendar_qa_ft.R
@@ -70,10 +71,10 @@ class AddActivityTest {
         testFilledField(R.id.layout_start_time, R.id.et_start_time, startTime, true)
         testFilledField(R.id.layout_end_date, R.id.et_end_date, endDate, true)
         testFilledField(R.id.layout_end_time, R.id.et_end_time, endTime, true)
-        Espresso.onView(ViewMatchers.withId(R.id.btn_add)).check(
-            ViewAssertions.matches(
+        onView(withId(R.id.btn_add)).check(
+            matches(
                 AllOf.allOf(
-                    ViewMatchers.isDisplayed(), ViewMatchers.isEnabled())))
+                    isDisplayed(), isEnabled())))
     }
 
     @Test
@@ -90,11 +91,11 @@ class AddActivityTest {
             testFilledField(layoutResourceIds[i], editTextResourceIds[i], texts[i], flags[i])
         }
         for (i in 0 until length) {
-            Espresso.onView(ViewMatchers.withId(editTextResourceIds[i])).perform(ViewActions.replaceText(emptyString))
-            Espresso.onView(ViewMatchers.withId(R.id.btn_add)).check(
-                ViewAssertions.matches(
+            onView(withId(editTextResourceIds[i])).perform(replaceText(emptyString))
+            onView(withId(R.id.btn_add)).check(
+                matches(
                     AllOf.allOf(
-                        ViewMatchers.isDisplayed(), IsNot.not(ViewMatchers.isEnabled()))))
+                        isDisplayed(), IsNot.not(isEnabled()))))
             testFilledField(layoutResourceIds[i], editTextResourceIds[i], texts[i], flags[i])
         }
     }
@@ -115,55 +116,68 @@ class AddActivityTest {
         testIsDisplayed(R.id.layout_end_time)
         testIsDisplayed(R.id.et_end_time)
 
-        Espresso.onView(ViewMatchers.withId(R.id.btn_add)).check(
-            ViewAssertions.matches(
+        onView(withId(R.id.btn_add)).check(
+            matches(
                 AllOf.allOf(
-                    ViewMatchers.isDisplayed(), IsNot.not(ViewMatchers.isEnabled()))))
+                    isDisplayed(), IsNot.not(isEnabled()))))
     }
 
     private fun testIsDisplayed(@IdRes resourceId: Int) {
-        Espresso.onView(ViewMatchers.withId(resourceId)).check(
-            ViewAssertions.matches(
-                ViewMatchers.isDisplayed()))
+        onView(withId(resourceId)).check(
+            matches(
+                isDisplayed()))
     }
 
     private fun testErrorMessageOnEmptyField(@IdRes layoutResourceId: Int,
                                              @IdRes editTextResourceId: Int) {
-        Espresso.onView(ViewMatchers.withId(editTextResourceId)).perform(ViewActions.click())
-            .perform(ViewActions.replaceText(anyString))
-            .perform(ViewActions.replaceText(emptyString))
-        val textInputLayout = activity.findViewById<TextInputLayout>(layoutResourceId)
-
-        Assert.assertTrue(textInputLayout.isErrorEnabled)
-        //Assert.assertTrue(textInputLayout.isEndIconVisible)
-        Assert.assertEquals(activity.getString(R.string.field_empty_error_message),
-            textInputLayout.error.toString())
+        onView(withId(editTextResourceId))
+            .perform(click())
+            .perform(replaceText(anyString))
+            .perform(replaceText(emptyString))
+        assertOnTextInputLayoutError(layoutResourceId, R.string.field_empty_error_message)
     }
 
     private fun testErrorMessageOnMaxTextExceeded(@IdRes layoutResourceId: Int,
                                                   @IdRes editTextResourceId: Int) {
         val textInputLayout = activity.findViewById<TextInputLayout>(layoutResourceId)
         val textOverMaxLength = RandomStringUtils.random(textInputLayout.counterMaxLength + 1, true, true)
-        Espresso.onView(ViewMatchers.withId(editTextResourceId)).perform(ViewActions.click())
+        onView(withId(editTextResourceId))
+            .perform(click())
+            .perform(replaceText(textOverMaxLength))
+        assertOnTextInputLayoutError(layoutResourceId, R.string.field_max_characters_error_message)
+    }
 
-            .perform(ViewActions.replaceText(textOverMaxLength))
-        Assert.assertTrue(textInputLayout.isErrorEnabled)
-        //Assert.assertTrue(textInputLayout.isEndIconVisible)
-        Assert.assertEquals(activity.getString(R.string.field_max_characters_error_message),
-            textInputLayout.error.toString())
+    private fun assertOnTextInputLayoutError(@IdRes layoutResourceId: Int,
+                                             @StringRes stringResourceId: Int) {
+        onView(withId(layoutResourceId))
+            .check { view, _ ->
+                val textInputLayout = view as TextInputLayout
+                Assert.assertTrue(textInputLayout.isErrorEnabled)
+                Assert.assertEquals(activity.getString(stringResourceId),
+                    textInputLayout.error.toString())
+            }
     }
 
     private fun testFilledField(@IdRes layoutResourceId: Int,
                                 @IdRes editTextResourceId: Int,
                                 text: String, dateTimeField: Boolean) {
-        val textInputLayout = activity.findViewById<TextInputLayout>(layoutResourceId)
         if (dateTimeField) {
-            Espresso.onView(ViewMatchers.withId(editTextResourceId)).perform(ViewActions.replaceText(text))
+            onView(withId(editTextResourceId)).perform(replaceText(text))
         } else {
-            Espresso.onView(ViewMatchers.withId(editTextResourceId)).perform(ViewActions.click())
-                .perform(ViewActions.replaceText(text))
+            onView(withId(editTextResourceId))
+                .perform(click())
+                .perform(replaceText(text))
         }
-        Assert.assertFalse(textInputLayout.isErrorEnabled)
-        Assert.assertTrue(textInputLayout.isEndIconVisible)
+        assertOnTextInputLayoutFilled(layoutResourceId)
+    }
+
+    private fun assertOnTextInputLayoutFilled(@IdRes layoutResourceId: Int) {
+        onView(withId(layoutResourceId))
+            .check { view, _ ->
+                val textInputLayout = view as TextInputLayout
+                Assert.assertFalse(textInputLayout.isErrorEnabled)
+                Assert.assertTrue(textInputLayout.isEndIconVisible)
+            }
+
     }
 }

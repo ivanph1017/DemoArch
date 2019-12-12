@@ -1,5 +1,6 @@
 package com.eveexite.demoarch.calendar_qa_ft.presentation.add.view
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -8,6 +9,7 @@ import com.google.android.material.textfield.TextInputLayout
 import java.lang.ref.WeakReference
 
 internal class TextListener(
+    private val context: Context,
     private val textInputLayout: TextInputLayout,
     private val weakListener: WeakReference<Listener>
 ) : TextWatcher {
@@ -25,16 +27,10 @@ internal class TextListener(
                 && editable.length > textInputLayout.counterMaxLength
         when {
             editable.isEmpty() -> {
-                weakListener.get()?.onTextInputLayoutError(
-                    textInputLayout,
-                    R.string.field_empty_error_message
-                )
+                onTextInputLayoutError(R.string.field_empty_error_message)
                 weakListener.get()?.hideKeyword()
             }
-            isOverCounterMaxLength -> weakListener.get()?.onTextInputLayoutError(
-                textInputLayout,
-                R.string.field_max_characters_error_message
-            )
+            isOverCounterMaxLength -> onTextInputLayoutError(R.string.field_max_characters_error_message)
             else -> {
                 textInputLayout.isErrorEnabled = false
                 textInputLayout.setEndIconDrawable(R.drawable.ic_check)
@@ -43,11 +39,15 @@ internal class TextListener(
         weakListener.get()?.validateEnablingButton()
     }
 
+    internal fun onTextInputLayoutError(errorMessageRes: Int) {
+        textInputLayout.isErrorEnabled = true
+        textInputLayout.error = context.getString(errorMessageRes)
+        textInputLayout.setEndIconDrawable(R.drawable.ic_exclamation)
+    }
+
 }
 
 internal interface Listener {
-
-    fun onTextInputLayoutError(textInputLayout: TextInputLayout, errorMessageRes: Int)
 
     fun hideKeyword()
 
