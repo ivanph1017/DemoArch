@@ -25,7 +25,6 @@ class FeatureDomainModule {
             dataSourceFactory,
             deviceInfoUtil
         )
-
     @FeatureScope
     @Provides
     fun provideMapToCoffeeMakerNetStatus() = MapToCoffeeMakerNetStatus()

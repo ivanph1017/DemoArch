@@ -40,7 +40,6 @@ object DateUtil {
     fun parseDateTime(date: String, time: String): Date {
         val formatter = SimpleDateFormat(DATE_TIME_FORMAT, LOCALE)
         val dateTime = String.format(DATE_TIME_TEMPLATE, date, time)
-        val millis = formatter.parse("15/08/2019 09:59 PM").time
         return formatter.parse(dateTime) ?: throw ParseException("cannot parse date time", 0)
     }
 

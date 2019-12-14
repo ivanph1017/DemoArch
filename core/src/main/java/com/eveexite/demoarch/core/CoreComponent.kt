@@ -1,12 +1,12 @@
 package com.eveexite.demoarch.core
 
-import android.app.Application
 import android.content.Context
 import com.eveexite.demoarch.core.data.CoreRestModule
-import com.eveexite.demoarch.core.data.CoreRestServerFactory
+import com.eveexite.demoarch.core.data.RestServer
 import com.eveexite.demoarch.core.device.CoreDeviceModule
 import com.eveexite.demoarch.core.device.DeviceInfoUtil
-import com.eveexite.demoarch.core.presentation.CoreBuildersModule
+import com.eveexite.demoarch.core.device.JsonUtil
+import com.eveexite.demoarch.core.presentation.CoreActivityBuildersModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -24,7 +24,7 @@ import javax.inject.Singleton
         CoreModule::class,
         CoreRestModule::class,
         CoreDeviceModule::class,
-        CoreBuildersModule::class,
+        CoreActivityBuildersModule::class,
         AndroidInjectionModule::class
     ]
 )
@@ -38,11 +38,12 @@ interface CoreComponent: AndroidInjector<DaggerApplication> {
     val context: Context
     val port: Int
     val retrofit: Retrofit
-    val coreRestServerFactory: CoreRestServerFactory
+    val restServerBuilder: RestServer.Builder
     val deviceInfoUtil: DeviceInfoUtil
+    val jsonUtil: JsonUtil
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance application: Application): CoreComponent
+        fun create(@BindsInstance application: DaggerApplication): CoreComponent
     }
 }

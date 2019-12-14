@@ -34,6 +34,12 @@ android {
         //it.buildConfigField "String", 'COFFEE_MAKER', '"coffee-maker"'
     }
 
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+
     dataBinding {
         enabled = true
     }
@@ -63,6 +69,10 @@ dependencies {
     // Dagger 2
     kapt 'com.google.dagger:dagger-compiler:2.25.2'
     kapt 'com.google.dagger:dagger-android-processor:2.25.2'
+
+    // Tests compilers for Dagger
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.25.2'
+    kaptAndroidTest 'com.google.dagger:dagger-android-processor:2.25.2'
 
     // Testing
     testImplementation 'junit:junit:4.12'

@@ -1,0 +1,12 @@
+{
+  "coffeeMakerReady" : false,
+  "coffeeReady" : true,
+  "status" : {
+    "lastChanged" : 1522125849002,
+    "state" : "online"
+  },
+  "timer" : "00:00",
+  "timerSleep" : 3,
+  "turnOn" : false,
+  "waterLevel" : 1
+}

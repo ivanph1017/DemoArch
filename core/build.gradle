@@ -27,6 +27,12 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+
     dataBinding {
         enabled = true
     }
@@ -79,6 +85,10 @@ dependencies {
     api 'com.google.dagger:dagger-android-support:2.25.2'
     kapt 'com.google.dagger:dagger-compiler:2.25.2'
     kapt 'com.google.dagger:dagger-android-processor:2.25.2'
+
+    // Tests compilers for Dagger
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.25.2'
+    kaptAndroidTest 'com.google.dagger:dagger-android-processor:2.25.2'
 
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
 

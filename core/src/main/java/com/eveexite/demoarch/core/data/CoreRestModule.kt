@@ -21,7 +21,7 @@ private const val HTTPS = "https"
 private const val TIMEOUT: Long = 20
 
 @Module
-class CoreRestModule {
+open class CoreRestModule {
 
     @Singleton
     @Provides
@@ -61,9 +61,14 @@ class CoreRestModule {
     fun provideOkHttpClient(
         @Named("localHost") heldCertificate: HeldCertificate,
         certificatePinner: CertificatePinner
+    ): OkHttpClient = createOkHttpClient(heldCertificate, certificatePinner)
+
+    protected open fun createOkHttpClient(
+        localHeldCertificate: HeldCertificate,
+        certificatePinner: CertificatePinner
     ): OkHttpClient {
         val clientCertificates: HandshakeCertificates = HandshakeCertificates.Builder()
-            .addTrustedCertificate(heldCertificate.certificate)
+            .addTrustedCertificate(localHeldCertificate.certificate)
             .build()
 
         return OkHttpClient.Builder()
@@ -79,7 +84,7 @@ class CoreRestModule {
 
     }
 
-    protected fun getPort(): Int = 8080
+    protected open fun getPort(): Int = 8080
 
     @Singleton
     @Provides
@@ -87,7 +92,9 @@ class CoreRestModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(
+    fun provideRetrofit(okHttpClient: OkHttpClient, port: Int): Retrofit = createRetrofit(okHttpClient, port)
+
+    protected open fun createRetrofit(
         okHttpClient: OkHttpClient,
         port: Int
     ): Retrofit {
@@ -102,7 +109,7 @@ class CoreRestModule {
 
     @Singleton
     @Provides
-    fun provideCoreRestServerFactory(
+    fun provideRestServerBuilder(
         @Named("server") sslSocketFactory: SSLSocketFactory
-    ) = CoreRestServerFactory(sslSocketFactory)
+    ) = RestServer.Builder().serverSSLSocketFactory(sslSocketFactory)
 }

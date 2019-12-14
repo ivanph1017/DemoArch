@@ -1,5 +1,6 @@
 package com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.view
 
+import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -9,6 +10,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.eveexite.demoarch.coffeemaker_ft.DaggerFeatureComponent
+import com.eveexite.demoarch.coffeemaker_ft.FeatureComponent
 import com.eveexite.demoarch.coffeemaker_ft.R
 import com.eveexite.demoarch.coffeemaker_ft.databinding.ActivityCoffeeMakerBinding
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.model.AnimUi
@@ -17,6 +19,8 @@ import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.viewmodel.C
 import com.eveexite.demoarch.coffeemaker_ft.presentation.ViewModelFactory
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.viewmodel.ActionViewModel
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.viewmodel.StatusViewModel
+import com.eveexite.demoarch.core.BaseFeatureComponent
+import com.eveexite.demoarch.core.CoreApp
 import com.eveexite.demoarch.core.CoreComponent
 import com.eveexite.demoarch.core.CoreComponentProvider
 import com.eveexite.demoarch.core.presentation.CoreBaseActivity
@@ -28,21 +32,36 @@ import kotlinx.android.synthetic.main.activity_coffee_maker.fabPower
 
 @LayoutRes private val LAYOUT: Int = R.layout.activity_coffee_maker
 
-class CoffeeMakerActivity : CoreBaseActivity<ViewModelFactory, ActivityCoffeeMakerBinding>() {
+open class CoffeeMakerActivity : CoreBaseActivity<
+        ViewModelFactory,
+        ActivityCoffeeMakerBinding
+        >() {
 
     private lateinit var coffeeMakerViewModel: CoffeeMakerViewModel
     private lateinit var actionViewModel: ActionViewModel
     private lateinit var statusViewModel: StatusViewModel
     private lateinit var msgLive: MediatorLiveData<Pair<String, String>>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val coreApp = application as CoreApp
+        val featureComponent: BaseFeatureComponent = createFeatureComponent()
+        coreApp.putBaseFeatureComponent(this::class.java.name, featureComponent)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun getLayout(): Int = LAYOUT
 
-    override fun initDependencyInjection() {
+    override fun createFeatureComponent(): BaseFeatureComponent {
         val coreComponentProvider = application as CoreComponentProvider
         val coreComponent: CoreComponent = coreComponentProvider.provideCoreComponent()
-        DaggerFeatureComponent.factory()
+        return DaggerFeatureComponent.factory()
             .create(coreComponent)
-            .inject(this)
+    }
+
+    override fun initDependencyInjection() {
+        val coreApp = application as CoreApp
+        val featureComponent = coreApp.getBaseFeatureComponent(this::class.java.name) as FeatureComponent
+        featureComponent.inject(this)
         runOnUiThread { initView() }
     }
 

@@ -5,6 +5,7 @@ import com.eveexite.demoarch.coffeemaker_ft.data.rest.RestModule
 import com.eveexite.demoarch.coffeemaker_ft.domain.FeatureDomainModule
 import com.eveexite.demoarch.coffeemaker_ft.presentation.FeatureUiModule
 import com.eveexite.demoarch.coffeemaker_ft.presentation.coffeemaker.view.CoffeeMakerActivity
+import com.eveexite.demoarch.core.BaseFeatureComponent
 import com.eveexite.demoarch.core.CoreComponent
 import com.eveexite.demoarch.core.FeatureScope
 import dagger.Component
@@ -21,7 +22,7 @@ import dagger.Component
         CoreComponent::class
     ]
 )
-interface FeatureComponent {
+interface FeatureComponent: BaseFeatureComponent {
 
     fun inject(coffeeMakerActivity: CoffeeMakerActivity)
 

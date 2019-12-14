@@ -7,10 +7,10 @@ import androidx.test.runner.AndroidJUnitRunner
 class CalendarRunner: AndroidJUnitRunner() {
 
     override fun newApplication(
-        cl: ClassLoader?,
-        className: String?,
-        context: Context?
+        classLoader: ClassLoader,
+        className: String,
+        context: Context
     ): Application {
-        return super.newApplication(cl, AppTest::class.qualifiedName, context)
+        return super.newApplication(classLoader, CalendarAppTest::class.qualifiedName, context)
     }
 }

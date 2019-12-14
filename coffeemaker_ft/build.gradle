@@ -14,7 +14,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.eveexite.demoarch.coffeemaker_ft.CoffeeMakerRunner"
     }
 
     buildTypes {
@@ -28,6 +28,12 @@ android {
         //Coffee Maker
         it.buildConfigField "String", 'COFFEE_MAKER', '"coffee-maker"'
     }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
 
     dataBinding {
         enabled = true
@@ -63,6 +69,10 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.25.2'
     kapt 'com.google.dagger:dagger-android-processor:2.25.2'
 
+    // Tests compilers for Dagger
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.25.2'
+    kaptAndroidTest 'com.google.dagger:dagger-android-processor:2.25.2'
+
     // Testing
     testImplementation 'junit:junit:4.12'
     // Optional -- Mockito framework
@@ -77,6 +87,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.ext:truth:1.2.0'
     androidTestImplementation 'com.google.truth:truth:0.42'
+
+    // Idling resource
+    androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
 
     // Espresso dependencies
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

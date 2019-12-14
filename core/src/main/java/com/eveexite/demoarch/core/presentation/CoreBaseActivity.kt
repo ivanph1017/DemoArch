@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import com.eveexite.demoarch.core.BaseFeatureComponent
 import com.eveexite.demoarch.core.domain.JobExecutor
 import javax.inject.Inject
 
-abstract class CoreBaseActivity<T : ViewModelProvider.Factory, U : ViewDataBinding>: AppCompatActivity() {
+abstract class CoreBaseActivity<
+        T : ViewModelProvider.Factory,
+        U : ViewDataBinding
+        >: AppCompatActivity() {
 
     @Inject
     protected lateinit var viewModelFactory: T
@@ -26,4 +30,6 @@ abstract class CoreBaseActivity<T : ViewModelProvider.Factory, U : ViewDataBindi
     protected abstract fun initDependencyInjection()
 
     protected abstract fun initView()
+
+    protected abstract fun createFeatureComponent(): BaseFeatureComponent
 }

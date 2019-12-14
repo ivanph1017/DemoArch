@@ -2,12 +2,12 @@ package com.eveexite.demoarch.coffeemaker_ft.data.coffeemaker.datasource.impl
 
 import com.eveexite.demoarch.coffeemaker_ft.data.coffeemaker.CoffeeMakerRestService
 import com.eveexite.demoarch.coffeemaker_ft.data.coffeemaker.datasource.CoffeeMakerDataSource
-import com.eveexite.demoarch.coffeemaker_ft.data.rest.dispatcher.RestDispatcherFactory
 import com.eveexite.demoarch.coffeemaker_ft.data.coffeemaker.entity.CoffeeMakerEntity
 import com.eveexite.demoarch.coffeemaker_ft.data.rest.exception.RestOperationNotSupportedException
 import com.eveexite.demoarch.coffeemaker_ft.data.listener.DataGetterEventListener
 import com.eveexite.demoarch.coffeemaker_ft.data.listener.DataPosterEventListener
-import com.eveexite.demoarch.core.data.CoreRestServerFactory
+import com.eveexite.demoarch.core.data.RestServer
+import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockWebServer
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,21 +20,17 @@ private const val HTTP_200: Int = 200
 
 class CoffeeMakerDataSourceRestImpl(
     private val coffeeMakerRestService: CoffeeMakerRestService,
-    private val coreRestServerFactory: CoreRestServerFactory,
-    private val restDispatcherFactory: RestDispatcherFactory,
+    private val restServerBuilder: RestServer.Builder,
+    private val dispatcher: Dispatcher,
     private val port: Int
 ):
     CoffeeMakerDataSource {
 
-
-    private fun getServer(): MockWebServer {
-        val mockWebServer = coreRestServerFactory.createServer()
-        mockWebServer.dispatcher = restDispatcherFactory.createDispatcher()
-        return mockWebServer
-    }
-
     override fun getSingleCoffeeMakerEntity(weakListener: WeakReference<DataGetterEventListener>) {
-        val server: MockWebServer = getServer()
+        val server: MockWebServer = restServerBuilder
+            .dispatcher(dispatcher)
+            .build()
+            .mockWebServer
         server.start(port)
         val call: Call<CoffeeMakerEntity> = coffeeMakerRestService.getCoffeeMakerEntity()
         call.enqueue(
@@ -43,7 +39,10 @@ class CoffeeMakerDataSourceRestImpl(
     }
 
     override fun getCoffeeMakerEntity(weakListener: WeakReference<DataGetterEventListener>) {
-        val server: MockWebServer = getServer()
+        val server: MockWebServer = restServerBuilder
+            .dispatcher(dispatcher)
+            .build()
+            .mockWebServer
         server.start(port)
         val call: Call<CoffeeMakerEntity> = coffeeMakerRestService.getCoffeeMakerEntity()
         call.enqueue(

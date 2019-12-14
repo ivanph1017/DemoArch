@@ -1,50 +1,47 @@
 package com.eveexite.demoarch.coffeemaker_ft.data
 
-import android.content.Context
 import com.eveexite.demoarch.coffeemaker_ft.data.coffeemaker.CoffeeMakerRestService
 import com.eveexite.demoarch.coffeemaker_ft.data.coffeemaker.datasource.CoffeeMakerDataSourceFactory
-import com.eveexite.demoarch.coffeemaker_ft.data.rest.dispatcher.RestDispatcherFactory
-import com.eveexite.demoarch.coffeemaker_ft.data.util.JsonUtil
+import com.eveexite.demoarch.coffeemaker_ft.data.coffeemaker.datasource.CoffeeMakerDataSourceFactoryImpl
+import com.eveexite.demoarch.coffeemaker_ft.data.rest.RestDispatcher
+import com.eveexite.demoarch.core.device.JsonUtil
 import com.eveexite.demoarch.core.FeatureScope
-import com.eveexite.demoarch.core.data.CoreRestServerFactory
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.eveexite.demoarch.core.data.RestServer
 import dagger.Module
 import dagger.Provides
+import okhttp3.mockwebserver.Dispatcher
 
 @Module
-class FeatureDataModule {
+open class FeatureDataModule {
 
     @FeatureScope
     @Provides
-    fun provideObjectMapper() = ObjectMapper()
+    fun provideDispatcher(jsonUtil: JsonUtil): Dispatcher = RestDispatcher(jsonUtil)
 
-    @FeatureScope
-    @Provides
-    fun provideJsonUtil(
-        context: Context,
-        objectMapper: ObjectMapper
-    ) =
-        JsonUtil(
-            context,
-            objectMapper
+    protected open fun createCoffeeMakerDataSourceFactory(
+        coffeeMakerRestService: CoffeeMakerRestService,
+        restServerBuilder: RestServer.Builder,
+        dispatcher: Dispatcher,
+        port: Int
+    ): CoffeeMakerDataSourceFactory =
+        CoffeeMakerDataSourceFactoryImpl(
+            coffeeMakerRestService,
+            restServerBuilder,
+            dispatcher,
+            port
         )
-
-    @FeatureScope
-    @Provides
-    fun provideRestDispatcherFactory(jsonUtil: JsonUtil) = RestDispatcherFactory(jsonUtil)
 
     @FeatureScope
     @Provides
     fun provideCoffeeMakerDataSourceFactory(
         coffeeMakerRestService: CoffeeMakerRestService,
-        coreRestServerFactory: CoreRestServerFactory,
-        restDispatcherFactory: RestDispatcherFactory,
+        restServerBuilder: RestServer.Builder,
+        dispatcher: Dispatcher,
         port: Int
-    ) =
-        CoffeeMakerDataSourceFactory(
-            coffeeMakerRestService,
-            coreRestServerFactory,
-            restDispatcherFactory,
+    ): CoffeeMakerDataSourceFactory =
+        createCoffeeMakerDataSourceFactory(coffeeMakerRestService,
+            restServerBuilder,
+            dispatcher,
             port
         )
 }

@@ -2,6 +2,7 @@ package com.eveexite.demoarch.calendar_qa_ft
 
 import com.eveexite.demoarch.calendar_qa_ft.presentation.FeatureUiModule
 import com.eveexite.demoarch.calendar_qa_ft.presentation.add.view.AddActivity
+import com.eveexite.demoarch.core.BaseFeatureComponent
 import com.eveexite.demoarch.core.CoreComponent
 import com.eveexite.demoarch.core.FeatureScope
 import dagger.Component
@@ -15,7 +16,7 @@ import dagger.Component
         CoreComponent::class
     ]
 )
-interface FeatureComponent {
+interface FeatureComponent: BaseFeatureComponent {
 
     fun inject(addActivity: AddActivity)
 

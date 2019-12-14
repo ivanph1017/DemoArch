@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.util.Log
@@ -17,6 +18,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.eveexite.demoarch.calendar_qa_ft.DaggerFeatureComponent
+import com.eveexite.demoarch.calendar_qa_ft.FeatureComponent
 import com.eveexite.demoarch.calendar_qa_ft.R
 import com.eveexite.demoarch.calendar_qa_ft.databinding.ActivityAddBinding
 import com.eveexite.demoarch.calendar_qa_ft.device.CalendarHandler
@@ -26,6 +28,8 @@ import com.eveexite.demoarch.calendar_qa_ft.presentation.add.model.AddModel
 import com.eveexite.demoarch.calendar_qa_ft.presentation.add.viewmodel.AddViewModel
 import com.eveexite.demoarch.calendar_qa_ft.presentation.ViewModelFactory
 import com.eveexite.demoarch.calendar_qa_ft.presentation.finished.FinishedActivity
+import com.eveexite.demoarch.core.BaseFeatureComponent
+import com.eveexite.demoarch.core.CoreApp
 import com.eveexite.demoarch.core.CoreComponent
 import com.eveexite.demoarch.core.CoreComponentProvider
 import com.eveexite.demoarch.core.presentation.CoreBaseActivity
@@ -38,7 +42,10 @@ import java.lang.ref.WeakReference
 
 private const val READ_WRITE_CALENDAR_PERM = 100
 
-class AddActivity: CoreBaseActivity<ViewModelFactory, ActivityAddBinding>(), OnCompleteListener, Listener {
+class AddActivity: CoreBaseActivity<
+        ViewModelFactory,
+        ActivityAddBinding
+        >(), OnCompleteListener, Listener {
 
     private val readWriteCalendar: Array<String> = arrayOf(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
 
@@ -48,14 +55,26 @@ class AddActivity: CoreBaseActivity<ViewModelFactory, ActivityAddBinding>(), OnC
 
     private var model: AddModel? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val coreApp = application as CoreApp
+        val featureComponent: BaseFeatureComponent = createFeatureComponent()
+        coreApp.putBaseFeatureComponent(this::class.java.name, featureComponent)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun getLayout(): Int = LAYOUT
 
-    override fun initDependencyInjection() {
+    override fun createFeatureComponent(): BaseFeatureComponent {
         val coreComponentProvider = application as CoreComponentProvider
         val coreComponent: CoreComponent = coreComponentProvider.provideCoreComponent()
-        DaggerFeatureComponent.factory()
+        return DaggerFeatureComponent.factory()
             .create(coreComponent)
-            .inject(this)
+    }
+
+    override fun initDependencyInjection() {
+        val coreApp = application as CoreApp
+        val featureComponent = coreApp.getBaseFeatureComponent(this::class.java.name) as FeatureComponent
+        featureComponent.inject(this)
         runOnUiThread { initView() }
     }
 

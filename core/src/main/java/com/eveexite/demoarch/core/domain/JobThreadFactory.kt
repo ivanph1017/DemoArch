@@ -8,9 +8,9 @@ import java.util.concurrent.*
  */
 object JobExecutor: Executor  {
 
-    private val idleCoresNumber: Int = 0
+    private const val idleCoresNumber: Int = 0
     private val maxCoresNumber: Int = Runtime.getRuntime().availableProcessors()
-    private val keepAliveTime: Long = 10
+    private const val keepAliveTime: Long = 10
     private val keepAliveTimeUnit = TimeUnit.SECONDS
 
     private val threadPoolExecutor = ThreadPoolExecutor(
