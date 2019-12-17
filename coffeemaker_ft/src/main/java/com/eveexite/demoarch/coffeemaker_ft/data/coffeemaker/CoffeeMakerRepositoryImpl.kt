@@ -20,9 +20,9 @@ class CoffeeMakerRepositoryImpl(
         weakListener: WeakReference<DataGetterEventListener>
     ) {
         if (deviceInfoUtil.isOnline) {
-            firebaseImpl.getSingleCoffeeMakerEntity(weakListener)
-        } else {
             restImpl.getSingleCoffeeMakerEntity(weakListener)
+        } else {
+            firebaseImpl.getSingleCoffeeMakerEntity(weakListener)
         }
     }
 
@@ -30,9 +30,9 @@ class CoffeeMakerRepositoryImpl(
         weakListener: WeakReference<DataGetterEventListener>
     ) {
         if (deviceInfoUtil.isOnline) {
-            firebaseImpl.getCoffeeMakerEntity(weakListener)
-        } else {
             restImpl.getCoffeeMakerEntity(weakListener)
+        } else {
+            firebaseImpl.getCoffeeMakerEntity(weakListener)
         }
     }
 
@@ -41,9 +41,9 @@ class CoffeeMakerRepositoryImpl(
         turnOn: Boolean
     ) {
         if (deviceInfoUtil.isOnline) {
-            firebaseImpl.turnOnCoffeeMakerEntity(weakListener, turnOn)
-        } else {
             restImpl.turnOnCoffeeMakerEntity(weakListener, turnOn)
+        } else {
+            firebaseImpl.turnOnCoffeeMakerEntity(weakListener, turnOn)
         }
     }
 }

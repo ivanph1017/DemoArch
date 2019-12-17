@@ -11,7 +11,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.airbnb.lottie.LottieAnimationView
 import com.eveexite.demoarch.coffeemaker_ft.CoffeeMakerAppTest
 import com.eveexite.demoarch.coffeemaker_ft.R
-import com.eveexite.demoarch.coffeemaker_ft.data.rest.TestDispatcher
+import com.eveexite.demoarch.core.data.TestDispatcher
 import com.eveexite.demoarch.coffeemaker_ft.presentation.widget.TitleView
 import com.eveexite.demoarch.coffeemaker_ft.presentation.widget.WaterLevelView
 import com.eveexite.demoarch.core.device.JsonUtil
@@ -39,7 +39,8 @@ class CoffeeMakerIntegrationTest {
         private val appTest: CoffeeMakerAppTest = appContext as CoffeeMakerAppTest
         private val jsonUtil: JsonUtil = appTest.jsonUtil
         private val mockWebServer: MockWebServer = appTest.mockWebServer
-        private val dispatcher: Dispatcher = TestDispatcher(jsonUtil)
+        private val dispatcher: Dispatcher =
+            TestDispatcher(jsonUtil)
     }
 
     @Before

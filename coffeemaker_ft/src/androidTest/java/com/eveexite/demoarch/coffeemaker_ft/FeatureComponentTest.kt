@@ -1,6 +1,6 @@
 package com.eveexite.demoarch.coffeemaker_ft
 
-import com.eveexite.demoarch.coffeemaker_ft.data.FeatureDataModuleTest
+import com.eveexite.demoarch.coffeemaker_ft.data.FeatureDataModule
 import com.eveexite.demoarch.coffeemaker_ft.data.rest.RestModule
 import com.eveexite.demoarch.coffeemaker_ft.domain.FeatureDomainModule
 import com.eveexite.demoarch.coffeemaker_ft.presentation.FeatureUiModule
@@ -12,7 +12,7 @@ import dagger.Component
 @Component(
     modules = [
         RestModule::class,
-        FeatureDataModuleTest::class,
+        FeatureDataModule::class,
         FeatureDomainModule::class,
         FeatureUiModule::class
     ],

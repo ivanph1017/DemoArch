@@ -1,4 +1,4 @@
-package com.eveexite.demoarch.coffeemaker_ft.data.rest
+package com.eveexite.demoarch.core.data
 
 import android.util.Log
 import androidx.annotation.RawRes

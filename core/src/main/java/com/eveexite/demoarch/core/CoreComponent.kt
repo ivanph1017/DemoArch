@@ -2,7 +2,6 @@ package com.eveexite.demoarch.core
 
 import android.content.Context
 import com.eveexite.demoarch.core.data.CoreRestModule
-import com.eveexite.demoarch.core.data.RestServer
 import com.eveexite.demoarch.core.device.CoreDeviceModule
 import com.eveexite.demoarch.core.device.DeviceInfoUtil
 import com.eveexite.demoarch.core.device.JsonUtil
@@ -36,9 +35,7 @@ interface CoreComponent: AndroidInjector<DaggerApplication> {
      */
 
     val context: Context
-    val port: Int
     val retrofit: Retrofit
-    val restServerBuilder: RestServer.Builder
     val deviceInfoUtil: DeviceInfoUtil
     val jsonUtil: JsonUtil
 

@@ -4,7 +4,7 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockWebServer
 import javax.net.ssl.SSLSocketFactory
 
-class RestServer private constructor(
+class TestRestServer private constructor(
   val mockWebServer: MockWebServer
 ) {
 
@@ -19,6 +19,6 @@ class RestServer private constructor(
             mockWebServer.dispatcher = dispatcher
         }
 
-        fun build() = RestServer(mockWebServer)
+        fun build() = TestRestServer(mockWebServer)
     }
 }

@@ -6,6 +6,7 @@ import com.eveexite.demoarch.core.device.JsonUtil
 import com.eveexite.demoarch.core.BaseFeatureComponent
 import com.eveexite.demoarch.core.CoreComponentTest
 import com.eveexite.demoarch.core.DaggerCoreComponentTest
+import com.eveexite.demoarch.core.data.PORT
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -16,7 +17,6 @@ class CoffeeMakerAppTest: App() {
     lateinit var resource: IdlingResource
         private set
     lateinit var mockWebServer: MockWebServer
-        private set
     lateinit var jsonUtil: JsonUtil
         private set
 
@@ -35,13 +35,8 @@ class CoffeeMakerAppTest: App() {
     private fun createInitBlock() = Runnable {
         val coreComponentTest = coreComponent as CoreComponentTest
         resource = OkHttp3IdlingResource.create("OkHttp", coreComponentTest.okHttpClient)
-        mockWebServer = coreComponentTest
-            .restServerBuilder
-            .build()
-            .mockWebServer
         jsonUtil = coreComponentTest.jsonUtil
-        val port: Int = coreComponent.port
-        mockWebServer.start(port)
+        mockWebServer.start(PORT)
     }
 
     override fun putBaseFeatureComponent(
